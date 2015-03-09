@@ -25,13 +25,12 @@ module diffuser()
     translate([-2,0,-2]) cylinder(h = 84, d = 8, $fn = smooth);
   }
 }
-/*
+
 rotate([0,90,0]) ring();
 translate([15,0,0]) rotate([0,90,0]) ring();
 translate([0,-5,10]) strip_base();
-*/
 //translate([0,0,20]) rotate([0,90,0]) diffuser();
-diffuser();
+//diffuser();
 
 /*
 
