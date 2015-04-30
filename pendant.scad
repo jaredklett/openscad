@@ -1,6 +1,6 @@
-thick=0.5;
-height=10;
-smooth=50;
+outer_enclosure_height = 10;
+outer_enclosure_face_depth = 1;
+smooth = 50;
 
 module globe()
 {
@@ -35,34 +35,36 @@ for (i=[0:23])
 }
 */
 
+// Actual rendering calls
+
 render() difference()
 {
-	cylinder(r=68/2,h=1);
-	cylinder(r=3,h=1);
+	cylinder(r=(68/2) + 1,h=outer_enclosure_height);
+    // Cutout might need to be 1mm larger to accommodate neopixel ring
+	translate([0,0,1]) cylinder(r=68/2,h=outer_enclosure_height);
+	cylinder(r=3,h=1); // center hole
 	//cylinder(r=68/2,h=1, $fn=smooth);
-	//cylinder(r=3,h=1, $fn=smooth);
+	//cylinder(r=3,h=1, $fn=smooth); // center hole
 
 	for (i=[0:23])
 	{
+        // Outer ring
 		rotate([0,0,i*360/24])
 		translate([58/2,0,0])
 		translate([0,0,-1])
 		cylinder(d=6, h=3);
 		//cylinder(d=6, h=3, $fn=smooth);
 
+        // Spokes
 		rotate([0,0,i*360/24])
 		translate([14.5,0,0])
 		translate([0,0,1.5-1])
 		cube([21,0.5,3], center=true);
-
-		rotate([0,0,i*360/24])
-		translate([14.5,0,0])
-		translate([0,0,1.5-1])
-		cube([1,0.5,3], center=true);
 	}
 
     for (i=[0:11])
     {
+        // Inner ring
 		rotate([0,0,i*360/12])
 		translate([29/2,0,0])
 		translate([0,0,-1])
