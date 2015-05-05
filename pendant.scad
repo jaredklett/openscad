@@ -55,8 +55,15 @@ module main_design()
 
 module diffuser()
 {
-    cylinder(r=(68/2), h = 5);
-    translate([0,0,5]) main_design();
+    difference()
+    {
+        render()
+        {
+            cylinder(r=(68/2), h = 5);
+            translate([0,0,5]) main_design();
+        }
+        translate([0,0,-1]) main_design();
+    }
 }
 
 module outer_enclosure()
