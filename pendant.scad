@@ -77,6 +77,21 @@ module outer_enclosure()
     }
 }
 
+module trinket_pro()
+{
+    color("SteelBlue") cube([38,18,4], center=true);
+}
+
+module lipo_backpack()
+{
+    color("CadetBlue") cube([17,15,7], center=true);
+}
+
+module lipo_battery()
+{
+    color("DarkGray") cube([36,29,5], center=true);
+}
+
 /*
 for (i=[0:23])
 {
@@ -86,5 +101,8 @@ for (i=[0:23])
 
 // Actual rendering calls
 
-//render() outer_enclosure();
-render() diffuser();
+render() outer_enclosure();
+//render() diffuser();
+translate([-5,15,8]) trinket_pro();
+translate([24,0,8]) lipo_backpack();
+translate([-5,-10,8]) lipo_battery();
