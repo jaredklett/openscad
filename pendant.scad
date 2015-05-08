@@ -1,6 +1,7 @@
 outer_enclosure_height = 10;
+diffuser_height = 3;
 outer_enclosure_face_depth = 1;
-smooth = 50;
+smooth = 150;
 
 module globe()
 {
@@ -22,9 +23,8 @@ module spike()
 
 module main_design()
 {
-    translate([0,0,-1]) cylinder(d=6, h=3); // center hole
-    //cylinder(r=68/2,h=1, $fn=smooth);
-    //cylinder(d=6, h=3, $fn=smooth); // center hole
+//    translate([0,0,-1]) cylinder(d=6, h=3); // center hole
+    translate([0,0,-1]) cylinder(d=6, h=3, $fn=smooth); // center hole
     
     for (i=[0:23])
     {
@@ -32,8 +32,8 @@ module main_design()
         rotate([0,0,i*360/24])
         translate([58/2,0,0])
         translate([0,0,-1])
-        cylinder(d=6, h=3);
-        //cylinder(d=6, h=3, $fn=smooth);
+//        cylinder(d=6, h=3);
+        cylinder(d=6, h=3, $fn=smooth);
     
         // Spokes
         rotate([0,0,i*360/24])
@@ -48,9 +48,14 @@ module main_design()
         rotate([0,0,i*360/12])
         translate([29/2,0,0])
         translate([0,0,-1])
-        cylinder(d=6, h=3);
-        //cylinder(d=6, h=3, $fn=smooth);
+//        cylinder(d=6, h=3);
+        cylinder(d=6, h=3, $fn=smooth);
     }
+}
+
+module separator()
+{
+        cylinder(r=(68/2), h = 5);
 }
 
 module diffuser()
@@ -59,10 +64,24 @@ module diffuser()
     {
         render()
         {
-            cylinder(r=(68/2), h = 5);
-            translate([0,0,5]) main_design();
+            cylinder(r=(68/2), h = diffuser_height, $fn=smooth);
+            translate([0,0,diffuser_height - 1]) main_design();
         }
-        translate([0,0,-1]) main_design();
+        for (i=[0:23])
+        {
+            // Outer ring
+            rotate([0,0,i*360/24])
+            translate([58/2,0,0])
+            cube([5,5,1], center = true);
+        }
+        for (i=[0:11])
+        {
+            // Inner ring
+            rotate([0,0,i*360/12])
+            translate([29/2,0,0])
+            cube([5,5,1], center = true);
+        }
+        cube([5,5,1], center = true); // center hole
     }
 }
 
@@ -70,9 +89,9 @@ module outer_enclosure()
 {
     difference()
     {
-        cylinder(r=(68/2) + 1,h=outer_enclosure_height);
+        cylinder(r=(68/2) + 1,h=outer_enclosure_height, $fn=smooth);
         // Cutout might need to be 1mm larger to accommodate neopixel ring
-        translate([0,0,1]) cylinder(r=68/2,h=outer_enclosure_height);
+        translate([0,0,1]) cylinder(r=68/2,h=outer_enclosure_height, $fn=smooth);
         main_design();
     }
 }
@@ -101,8 +120,8 @@ for (i=[0:23])
 
 // Actual rendering calls
 
-render() outer_enclosure();
 //render() diffuser();
-translate([-5,15,8]) trinket_pro();
-translate([24,0,8]) lipo_backpack();
-translate([-5,-10,8]) lipo_battery();
+translate([0,0,20]) rotate([180,0,0]) render() outer_enclosure();
+//translate([-5,15,8]) trinket_pro();
+//translate([24,0,8]) lipo_backpack();
+//translate([-5,-10,8]) lipo_battery();
