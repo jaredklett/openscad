@@ -1,5 +1,5 @@
 outer_enclosure_height = 10;
-diffuser_height = 3;
+diffuser_height = 1;
 outer_enclosure_face_depth = 1;
 smooth = 150;
 
@@ -65,7 +65,7 @@ module diffuser()
         render()
         {
             cylinder(r=(68/2), h = diffuser_height, $fn=smooth);
-            translate([0,0,diffuser_height - 1]) main_design();
+            translate([0,0,diffuser_height]) main_design();
         }
         for (i=[0:23])
         {
@@ -91,7 +91,7 @@ module outer_enclosure()
     {
         cylinder(r=(68/2) + 1,h=outer_enclosure_height, $fn=smooth);
         // Cutout might need to be 1mm larger to accommodate neopixel ring
-        translate([0,0,1]) cylinder(r=68/2,h=outer_enclosure_height, $fn=smooth);
+        translate([0,0,2]) cylinder(r=68/2,h=outer_enclosure_height, $fn=smooth);
         main_design();
     }
 }
@@ -120,8 +120,8 @@ for (i=[0:23])
 
 // Actual rendering calls
 
-//render() diffuser();
-translate([0,0,20]) rotate([180,0,0]) render() outer_enclosure();
+render() diffuser();
+//translate([0,0,20]) rotate([180,0,0]) render() outer_enclosure();
 //translate([-5,15,8]) trinket_pro();
 //translate([24,0,8]) lipo_backpack();
 //translate([-5,-10,8]) lipo_battery();
