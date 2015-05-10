@@ -1,8 +1,8 @@
 outer_enclosure_height = 10;
 diffuser_height = 1;
 outer_enclosure_face_depth = 1;
-smooth = 150;
-
+smooth = 200;
+/*
 module globe()
 {
 	render() difference()
@@ -20,26 +20,22 @@ module spike()
 		translate([0,0,-0.5]) cylinder(r1=10/2, r2=0, h=height, $fa=360/5);
 	}
 }
-
-module main_design()
+*/
+module main_design(design_height=3)
 {
-//    translate([0,0,-1]) cylinder(d=6, h=3); // center hole
-    translate([0,0,-1]) cylinder(d=6, h=3, $fn=smooth); // center hole
+    cylinder(d=6, h=design_height, $fn=smooth); // center pillar
     
     for (i=[0:23])
     {
         // Outer ring
         rotate([0,0,i*360/24])
         translate([58/2,0,0])
-        translate([0,0,-1])
-//        cylinder(d=6, h=3);
-        cylinder(d=6, h=3, $fn=smooth);
+        cylinder(d=6, h=design_height, $fn=smooth);
     
         // Spokes
         rotate([0,0,i*360/24])
-        translate([14.5,0,0])
-        translate([0,0,1.5-1])
-        cube([21,0.5,3], center=true);
+        translate([4,0,0]) // the radius of the center cylinder plus one
+        cube([21,0.5,design_height], center=false);
     }
     
     for (i=[0:11])
@@ -47,9 +43,7 @@ module main_design()
         // Inner ring
         rotate([0,0,i*360/12])
         translate([29/2,0,0])
-        translate([0,0,-1])
-//        cylinder(d=6, h=3);
-        cylinder(d=6, h=3, $fn=smooth);
+        cylinder(d=6, h=design_height, $fn=smooth);
     }
 }
 
@@ -65,23 +59,23 @@ module diffuser()
         render()
         {
             cylinder(r=(68/2), h = diffuser_height, $fn=smooth);
-            translate([0,0,diffuser_height]) main_design();
+            translate([0,0,diffuser_height]) main_design(4);
         }
         for (i=[0:23])
         {
             // Outer ring
             rotate([0,0,i*360/24])
             translate([58/2,0,0])
-            cube([5,5,1], center = true);
+            cube([6,6,1], center = true);
         }
         for (i=[0:11])
         {
             // Inner ring
             rotate([0,0,i*360/12])
             translate([29/2,0,0])
-            cube([5,5,1], center = true);
+            cube([6,6,1], center = true);
         }
-        cube([5,5,1], center = true); // center hole
+        cube([6,6,1], center = true); // center hole
     }
 }
 
