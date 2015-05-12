@@ -1,5 +1,6 @@
 outer_enclosure_height = 10;
-diffuser_height = 1;
+diffuser_height = 2;
+diffuser_square_hole_dim = [6.4,6.4,2];
 outer_enclosure_face_depth = 1;
 smooth = 200;
 /*
@@ -66,16 +67,16 @@ module diffuser()
             // Outer ring
             rotate([0,0,i*360/24])
             translate([58/2,0,0])
-            cube([6,6,1], center = true);
+            cube(diffuser_square_hole_dim, center = true);
         }
         for (i=[0:11])
         {
             // Inner ring
             rotate([0,0,i*360/12])
             translate([29/2,0,0])
-            cube([6,6,1], center = true);
+            cube(diffuser_square_hole_dim, center = true);
         }
-        cube([6,6,1], center = true); // center hole
+        cube(diffuser_square_hole_dim, center = true); // center hole
     }
 }
 
