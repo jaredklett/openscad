@@ -32,6 +32,15 @@ module protective_insert()
     // window for contacts
     translate([-6,-20,-1]) cube([12,5,4]);
   }
+  translate([7,10.5,0]) trinket_mounting();
+}
+
+module trinket_mounting()
+{
+    cylinder(h = 8, d = 1, $fn = smooth);
+    translate([11.43,0,0]) cylinder(h = 8, d = 1, $fn = smooth);
+    translate([0,-21.59,0]) cylinder(h = 8, d = 1, $fn = smooth);
+    translate([11.43,-21.59,0]) cylinder(h = 8, d = 1, $fn = smooth);
 }
 
 module backplate()
@@ -65,6 +74,7 @@ outer_container();
 translate([60,0,0]) matrix_bracket();
 translate([0,60,0]) protective_insert();
 translate([-60,0,0]) backplate();
+//trinket_mounting();
 
 ///*
 //translate([-60,0,0]) backplate_with_window();
