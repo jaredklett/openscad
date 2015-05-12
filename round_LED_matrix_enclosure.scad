@@ -1,15 +1,17 @@
 smooth = 200;
+outer_height = 29;
+finger_dim = [0.25,1,5];
 
 module outer_container()
 {
   difference() {
-    cylinder(h = 19, r1 = 27.5, r2 = 27.5, $fn = smooth);
+    cylinder(h = outer_height, r1 = 27.5, r2 = 27.5, $fn = smooth);
     // thru hole
-    translate([0,0,1]) cylinder(h = 21, r1 = 25.5, r2 = 25.5, $fn = smooth);
+    translate([0,0,1]) cylinder(h = outer_height + 2, r1 = 25.5, r2 = 25.5, $fn = smooth);
     // inner rim to hold the filter
-    translate([0,0,-1]) cylinder(h = 21, r1 = 23.5, r2 = 23.5, $fn = smooth);
+    translate([0,0,-1]) cylinder(h = outer_height + 2, r1 = 23.5, r2 = 23.5, $fn = smooth);
     // 2mm lip
-    translate([0,0,17]) cylinder(h = 3, r1 = 27, r2 = 27, $fn = smooth);
+    translate([0,0,outer_height - 2]) cylinder(h = 3, r1 = 27, r2 = 27, $fn = smooth);
   }
 }
 
@@ -35,6 +37,13 @@ module protective_insert()
 module backplate()
 {
   cylinder(h = 2, r1 = 27, r2 = 27, $fn = smooth);
+  // fingers
+  for (i=[0:23]) 
+  {
+      rotate([0,0,i*360/23])
+      translate([25,0,2])
+      cube(finger_dim, center=false);
+  }
   rotate(a=[0,180,0]) translate([-18,0,0]) resize([10,0,0], auto=true) recycling_symbol();
 }
 
@@ -54,9 +63,9 @@ module recycling_symbol()
 
 outer_container();
 translate([60,0,0]) matrix_bracket();
+translate([0,60,0]) protective_insert();
 translate([-60,0,0]) backplate();
 
 ///*
 //translate([-60,0,0]) backplate_with_window();
-translate([0,60,0]) protective_insert();
 //*/
