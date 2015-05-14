@@ -65,8 +65,8 @@ module backplate()
     }
     difference()
     {
-        translate([0,0,2])cylinder(h = 5, d = 51, $fn = smooth);
-        translate([0,0,1]) cylinder(h = 7, d = 50.5, $fn = smooth);
+        translate([0,0,2])cylinder(h = 5, d = 50.5, $fn = smooth);
+        translate([0,0,1]) cylinder(h = 7, d = 50, $fn = smooth);
     }
 
     // fingers
