@@ -1,9 +1,8 @@
 outer_enclosure_height = 18;
-diffuser_height = 2;
-diffuser_cyl_height = 4;
+diffuser_height = 3;
 diffuser_square_hole_dim = [6.4,6.4,2];
 outer_enclosure_face_depth = 1;
-smooth = 200;
+smooth = 20;
 
 module main_design(design_height=3, cyl_d=6, spoke_w=0.5)
 {
@@ -17,9 +16,9 @@ module main_design(design_height=3, cyl_d=6, spoke_w=0.5)
         cylinder(d=cyl_d, h=design_height, $fn=smooth);
     
         // Spokes
-//        rotate([0,0,i*360/24])
-//        translate([4,0,0]) // the radius of the center cylinder plus one
-//        cube([21,spoke_w,design_height], center=false);
+        rotate([0,0,i*360/24])
+        translate([4,0,0]) // the radius of the center cylinder plus one
+        cube([21,spoke_w,design_height], center=false);
     }
     
     for (i=[0:11])
@@ -35,11 +34,7 @@ module diffuser()
 {
     difference()
     {
-        render()
-        {
-            cylinder(r=(68/2), h = diffuser_height, $fn=smooth);
-            translate([0,0,diffuser_height]) main_design(diffuser_cyl_height);
-        }
+        cylinder(r=(68/2), h = diffuser_height, $fn=smooth);
         for (i=[0:23])
         {
             // Outer ring
@@ -64,8 +59,9 @@ module outer_enclosure()
     {
         cylinder(r=(68/2) + 2, h=outer_enclosure_height, $fn=smooth);
         // Cutout might need to be 1mm larger to accommodate neopixel ring
-        translate([0,0,diffuser_cyl_height]) cylinder(r=(68/2) + 1,h=outer_enclosure_height, $fn=smooth);
-        main_design(4, 7, 0.75);
+        translate([0,0,1]) cylinder(r=(68/2) + 1,h=outer_enclosure_height, $fn=smooth);
+        // We could make this tighter: reduce diameter to focus the light from the LEDs
+        translate([0,0,-1]) main_design(3, 6, 0.5);
         // 10mm height for diffuser, rings, protective insert
         // 7mm height for lipo backpack
         // lip
@@ -140,8 +136,8 @@ module lipo_battery()
 // Actual rendering calls
 
 //rotate([0,0,180]) protective_insert();
-render() diffuser();
-//render() outer_enclosure();
+translate([0,0,20]) rotate([0,180,0]) diffuser();
+outer_enclosure();
 //backplate();
 //translate([0,0,20]) rotate([180,0,0]) render() outer_enclosure();
 //rotate([0,0,90]) translate([-15,0,8]) trinket_pro();
