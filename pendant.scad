@@ -17,7 +17,7 @@ module main_design(design_height=3, cyl_d=6, spoke_w=0.5)
     
         // Spokes
         rotate([0,0,(i*360/24)])
-        translate([5,-0.5/2,0]) // the radius of the center cylinder plus one
+        translate([7,-0.5,0]) // the radius of the center cylinder plus one
         cube([20,spoke_w,design_height], center=false);
     }
     
@@ -59,9 +59,8 @@ module outer_enclosure()
     {
         cylinder(r=(68/2) + 2, h=outer_enclosure_height, $fn=smooth);
         // Cutout might need to be 1mm larger to accommodate neopixel ring
-        translate([0,0,1]) cylinder(r=(68/2) + 1,h=outer_enclosure_height, $fn=smooth);
-        // We could make this tighter: reduce diameter to focus the light from the LEDs
-        translate([0,0,-1]) main_design(3, 5, 0.75);
+        translate([0,0,1]) cylinder(r=(68/2) + 1,h=outer_enclosure_height + 2, $fn=smooth);
+        translate([0,0,-1]) cylinder(r=(68/2) - 1,h=outer_enclosure_height + 2, $fn=smooth);
         // 10mm height for diffuser, rings, protective insert
         // 7mm height for lipo backpack
         // lip
@@ -72,6 +71,15 @@ module outer_enclosure()
         translate([20,-(68/2)+8,11]) rotate([0,0,40]) cube([11.75,7,4.25], center=true);
     }
     rotate([0,0,180]) translate([0,-37,9]) necklace_loop();
+}
+
+module laser_cutting()
+{
+    difference()
+    {
+        cylinder(r=(68/2), h=1, $fn=smooth);
+        translate([0,0,-1]) main_design(3, 5, 1);
+    }
 }
 
 module protective_insert()
@@ -135,6 +143,7 @@ module lipo_battery()
 
 // Actual rendering calls
 
+//laser_cutting();
 //rotate([0,0,180]) protective_insert();
 //translate([0,0,20]) rotate([0,180,0]) diffuser();
 outer_enclosure();
