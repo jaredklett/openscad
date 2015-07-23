@@ -8,12 +8,21 @@ module diffuser() {
     }
 }
 
-module ring_and_setting() {
+module gemma_setting() {
     difference() {
         cylinder(d = 29, h = 9, $fn = smooth);
         translate([0,0,1]) cylinder(d = 28, h = 9, $fn = smooth);
     }
 }
 
-ring_and_setting();
+module ring() {
+    difference() {
+        // TODO: smooth the edges?
+        cylinder(h = 5, d = 24, $fn = smooth);
+        translate([0,0,-1]) cylinder(h = 7, d = 19, $fn = smooth);
+    }
+}
+
+gemma_setting();
+translate([-2.5,0,-12]) rotate([0,90,0]) ring();
 translate([0,0,15]) diffuser();
