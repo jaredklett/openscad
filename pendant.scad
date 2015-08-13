@@ -1,5 +1,5 @@
 outer_enclosure_height = 18;
-diffuser_height = 4;
+diffuser_height = 2;
 diffuser_square_hole_dim = [6.4,6.4,2];
 outer_enclosure_face_depth = 1;
 smooth = 200;
@@ -39,17 +39,17 @@ module diffuser()
         {
             // Outer ring
             rotate([0,0,i*360/24])
-            translate([58/2,0,1])
+            translate([58/2,0,0])
             cube(diffuser_square_hole_dim, center = true);
         }
         for (i=[0:11])
         {
             // Inner ring
             rotate([0,0,i*360/12])
-            translate([29/2,0,1])
+            translate([29/2,0,0])
             cube(diffuser_square_hole_dim, center = true);
         }
-        translate([0,0,1]) cube(diffuser_square_hole_dim, center = true); // center hole
+        translate([0,0,0]) cube(diffuser_square_hole_dim, center = true); // center hole
     }
 }
 
@@ -145,7 +145,7 @@ module lipo_battery()
 
 //laser_cutting();
 //rotate([0,0,180]) protective_insert();
-//translate([0,0,20]) rotate([0,180,0]) diffuser();
+translate([0,0,20]) rotate([0,180,0]) diffuser();
 outer_enclosure();
 //backplate();
 //translate([0,0,20]) rotate([180,0,0]) render() outer_enclosure();
