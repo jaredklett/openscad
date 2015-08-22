@@ -13,7 +13,7 @@ module main_design(design_height=3, cyl_d=6, spoke_w=0.5)
     
         // Spokes
         rotate([0,0,(i*360/24)])
-        translate([7,-0.5,0]) // the radius of the center cylinder plus one
+        translate([8,-0.5,0]) // the radius of the center cylinder plus one
         square([20,spoke_w], center=false);
     }
     
@@ -22,7 +22,7 @@ module main_design(design_height=3, cyl_d=6, spoke_w=0.5)
         // Inner ring
         rotate([0,0,i*360/12])
         translate([29/2,0,0])
-        circle(d=cyl_d, h=design_height, $fn=smooth);
+        circle(d=cyl_d - 0.5, h=design_height, $fn=smooth);
     }
 }
 
