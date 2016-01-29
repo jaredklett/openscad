@@ -71,8 +71,9 @@ difference() {
     sphere_diffuser();
     translate([0,0,-5]) cube([25,25,10], center = true);
 }
+translate([0,0,-5]) diffuser_base();
 //translate([0,0,-5]) rotate([0,180,0]) diffuser_base();
 
-//gemma_setting();
+//translate([0,0,-10]) gemma_setting();
 //translate([-2.5,0,-12]) rotate([0,90,0]) ring();
 //translate([0,0,15]) diffuser();
