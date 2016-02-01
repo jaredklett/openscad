@@ -1,7 +1,6 @@
 smooth = 200;
 
-diffuser_square_hole_dim = [6,6,2];
-//diffuser_square_hole_dim = [6.4,6.4,2];
+diffuser_square_hole_dim = [6.4,6.4,3];
 sphere_diameter = 9;
 sphere_half_offset = -5;
 
@@ -28,26 +27,16 @@ module cone_diffuser() {
 module diffuser_base() {
     difference() {
         // base
-        cylinder(r = 23/2, h = 1.25, $fn=smooth);
+        cylinder(r = 25/2, h = 3, $fn=smooth);
         // cutouts for LEDs
         for (i=[0:5])
         {
             rotate([0,0,i*360/6])
-            translate([15/2,0,0])
+            translate([17/2,0,0])
             cube(diffuser_square_hole_dim, center = true);
         }
         // center LED cutout
-        //cube([10,10,2], center = true);
         cube(diffuser_square_hole_dim, center = true);
-        // cutouts for resistors
-        rotate([0,0,30]) {
-            for (i=[0:5])
-            {
-                rotate([0,0,i*360/6])
-                translate([19/2,0,0])
-                cube([3,1,2], center = true);
-            }
-        }
     }
 }
 
@@ -67,11 +56,11 @@ module ring() {
 }
 
 //cone_diffuser();
-difference() {
-    sphere_diffuser();
-    translate([0,0,-5]) cube([25,25,10], center = true);
-}
-translate([0,0,-5]) diffuser_base();
+//difference() {
+//    sphere_diffuser();
+//    translate([0,0,-5]) cube([25,25,10], center = true);
+//}
+diffuser_base();
 //translate([0,0,-5]) rotate([0,180,0]) diffuser_base();
 
 //translate([0,0,-10]) gemma_setting();
